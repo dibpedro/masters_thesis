@@ -1,4 +1,4 @@
-# Master's Thesis [Volatility Surfaces and Calibration in the Heston Model]
+# Master's Thesis - Volatility Surfaces and Calibration in the Heston Model
 
 This repository contains all the code, data, and supporting materials developed for my master's thesis at PPGMAT - UnB.
 
