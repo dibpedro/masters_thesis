@@ -56,7 +56,7 @@ def correlated_BM_plot(tempo: np.ndarray, W1: np.ndarray, W2: np.ndarray, rho: f
     plt.figure(figsize=(11, 7))
     plt.plot(tempo, W1, label='W1', color='mediumturquoise')
     plt.plot(tempo, W2, label='W2', color='mediumvioletred')
-    plt.title(f'ρ={rho}')
+    plt.title(f'Movimentos Brownianos com correlação ρ={rho}')
     plt.xlabel('Tempo')
     plt.ylabel('W(t)')
     plt.legend()

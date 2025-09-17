@@ -64,7 +64,7 @@ if __name__ == "__main__":
 
     plt.plot(tempo, trajetorias, alpha=0.7, linewidth=1.5)
 
-    plt.title(f'{num_sim} Trajetórias Simuladas do MGB', fontsize=13)
+    plt.title(f'{num_sim} Trajetórias Simuladas do MBG', fontsize=13)
     plt.xlabel('Tempo', fontsize=11)
     plt.ylabel('Preço do Ativo S(t)', fontsize=11)
     plt.grid(True, linestyle='--', alpha=0.5)
