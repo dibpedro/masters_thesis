@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+import os
 
 
 def plot_smile(ativo: str, tipo: str, vencimento: str, df: pd.DataFrame):
@@ -41,7 +42,16 @@ def plot_smile(ativo: str, tipo: str, vencimento: str, df: pd.DataFrame):
     ax.grid(True)
 
     ax.legend()
-    plt.savefig(f'smile_{ativo} - {vencimento}.pdf', bbox_inches='tight')
+    output_dir = 'Figuras'
+
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    nome = f'smile_{ativo}_{vencimento}.pdf'
+    caminho = os.path.join(output_dir, nome)
+
+    plt.savefig(caminho, dpi=300, bbox_inches='tight')
+    print(f"Gráfico salvo em: {caminho}")
     plt.show()
 
 
@@ -67,10 +77,20 @@ def vol_surface(ativo: str, data_hoje: str, df: pd.DataFrame):
     # Customizando
     ax.set_title(f'{ativo}', fontsize=15, pad=7)
     ax.set_xlabel('Strike', fontsize=12, labelpad=10)
-    ax.set_ylabel('$\tau$ - Dias até o Vencimento', fontsize=12, labelpad=10)
+    ax.set_ylabel('Dias até o Vencimento', fontsize=12, labelpad=10)
     ax.set_zlabel('Volatilidade Implícita (%)', fontsize=12, labelpad=10)
     fig.colorbar(scatter, shrink=0.5, aspect=10, label='Vol. Implícita (%)')
 
     ax.view_init(elev=45, azim=-50)
-    plt.savefig(f'SVI_{ativo} - {data_hoje}.pdf', bbox_inches='tight')
+
+    output_dir = 'Figuras'
+
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    nome = f'SVI_{ativo}_{data_hoje}.pdf'
+    caminho = os.path.join(output_dir, nome)
+
+    plt.savefig(caminho, dpi=300, bbox_inches='tight')
+    print(f"Gráfico salvo em: {caminho}")
     plt.show()
