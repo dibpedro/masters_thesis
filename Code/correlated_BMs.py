@@ -51,15 +51,19 @@ def correlated_BMs(T: float, passos: int, rho: float) -> tuple:
     return tempo, W1, W2, dW1, dW2
 
 
+# cores rho > 0: mediumturquoise e mediumvioletred
+# cores rho < 0: mediumpurple e navy
+
 def correlated_BM_plot(tempo: np.ndarray, W1: np.ndarray, W2: np.ndarray, rho: float):
     """Função auxiliar para plotar os dois MBs."""
     plt.figure(figsize=(11, 7))
-    plt.plot(tempo, W1, label='W1', color='mediumturquoise')
-    plt.plot(tempo, W2, label='W2', color='mediumvioletred')
-    plt.title(f'Movimentos Brownianos com correlação ρ={rho}')
-    plt.xlabel('Tempo')
-    plt.ylabel('W(t)')
-    plt.legend()
+    plt.plot(tempo, W1, label='$W_1$', color='mediumpurple')
+    plt.plot(tempo, W2, label='$W_2$', color='navy')
+    plt.title(f'ρ={rho}', fontsize=24, fontweight='bold')
+    plt.xlabel('t', fontsize=20)
+    plt.ylabel('W(t)', fontsize=20)
+    plt.tick_params(axis='both', which='major', labelsize=16)
+    plt.legend(fontsize=14)
     plt.grid(True)
 
     output_dir = 'Figuras'
@@ -80,9 +84,8 @@ if __name__ == "__main__":
     # Parâmetros da simulação
     T = 1
     passos = 252
-    rho = 0.7
+    rho = -0.7
 
-    print(f'Gerando duas trajetórias de MBs com correlação {rho}')
     # Simulando os dados
     tempo, W1, W2, dW1, dW2 = correlated_BMs(T, passos, rho)
 

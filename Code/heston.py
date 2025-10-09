@@ -99,10 +99,12 @@ def plot_heston(paths: np.ndarray, T: float, num_steps: int, title: str, ylabel:
         plt.plot(tempo, paths[:, i], color=colors[i])
 
     plt.title(title, fontsize=17)
-    plt.ylabel(ylabel, fontsize=11)
-    plt.xlabel('t', fontsize=11)
+    plt.ylabel(ylabel, fontsize=20)
+    plt.xlabel('t', fontsize=20)
+    plt.tick_params(axis='both', which='major', labelsize=16)
+    plt.grid(True, linestyle=':', alpha=0.6)
+
     plt.grid(True)
-    plt.legend()
 
     output_dir = 'Figuras'
 
@@ -132,5 +134,5 @@ if __name__ == "__main__":
     }
 
     S_paths, v_paths = heston_paths(params)
-    plot_heston(v_paths, params['T'], params['num_steps'],
-                'Processo de variância $v_t$ - Heston', '$v_t$', 'GnBu', 7)
+    plot_heston(S_paths, params['T'],
+                params['num_steps'], '', '$S_t$', 'RdPu', 7)

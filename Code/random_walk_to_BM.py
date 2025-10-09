@@ -42,10 +42,11 @@ if __name__ == '__main__':
         plt.plot(tempo, trajetoria, label=f'N = {N}', color=cores[i])
 
     # Exportando o gráfico
-    plt.title('Convergência do Passeio Aleatório para o Movimento Browniano')
-    plt.xlabel('t')
-    plt.ylabel('W(t)')
-    plt.legend()
+    #plt.title('Convergência do Passeio Aleatório para o Movimento Browniano')
+    plt.xlabel('t', fontsize=20)
+    plt.ylabel('$W_t$', fontsize=20)
+    plt.tick_params(axis='both', which='major', labelsize=16)
+    plt.legend(title='Núm. Passos (N)', title_fontsize='16', fontsize='14')
     plt.grid(True)
 
     output_dir = 'Figuras'

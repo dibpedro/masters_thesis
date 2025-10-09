@@ -46,7 +46,7 @@ if __name__ == "__main__":
     sigma = 0.20
     T = 1
     N = 252
-    num_sim = 5
+    num_sim = 3
 
     # Simulação
     trajetorias = GBM_simulation(s0, mu, sigma, T, N, num_sim)
@@ -64,9 +64,10 @@ if __name__ == "__main__":
 
     plt.plot(tempo, trajetorias, alpha=0.7, linewidth=1.5)
 
-    plt.title(f'{num_sim} Trajetórias Simuladas do MBG', fontsize=13)
-    plt.xlabel('Tempo', fontsize=11)
-    plt.ylabel('Preço do Ativo S(t)', fontsize=11)
+    # plt.title(f'Simulação de {num_sim} trajetórias do MBG', fontsize=13)
+    plt.xlabel('t', fontsize=20)
+    plt.ylabel('$S_t$', fontsize=20)
+    ax.tick_params(axis='both', which='major', labelsize=16)
     plt.grid(True, linestyle='--', alpha=0.5)
 
     output_dir = 'Figuras'
