@@ -46,15 +46,16 @@ def BS_vega(S: float, K: float, tau: float, r: float, sigma: float) -> float:
     return vega
 
 
-def vol_imp(C_mkt: float, S: float, K: float, tau: float, r: float, sigma_inicial: float) -> float:
+def vol_imp(C_mkt: float, S: float, K: float, tau: float, r: float, sigma_inicial: float = 0.2) -> float:
     '''Calcula a voltilidade implícita de uma opção de compra europeia utilizando o algoritmo de Newton-Raphson.
     Recebe como parâmetros:
-    C_mkt = o valor de mercado da call
-    S = preço atual do ativo
-    K = preço de exercício
-    tau = tempo até o vencimento
-    r = taxa de juros livre de risco (anualizada)
-    sigma_inicial = chute inicial para a volatilidade (anualizada)
+    C_mkt -> o valor de mercado da call
+    S -> preço atual do ativo
+    K -> preço de exercício
+    tau -> tempo até o vencimento
+    r -> taxa de juros livre de risco (anualizada)
+    sigma_inicial -> chute inicial para a volatilidade (anualizada)
+
 
     Faz uso das funções BS_call_price() e BS_vega() previamente definidas.
     Retorna o valor da volatilidade implícita. 

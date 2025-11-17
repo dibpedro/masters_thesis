@@ -2,14 +2,15 @@ import numpy as np
 from scipy.integrate import quad
 
 
-def heston_char(k: float, S0: float, K: float, v0: float, r: float, tau: float, kappa: float, v_bar: float, gamma: float, rho: float, j: int):
+def heston_char(k: float, S0: float, K: float, r: float, tau: float, v0: float, kappa: float, v_bar: float, gamma: float, rho: float, j: int):
     '''
     Calcula a função característica do modelo de Heston para as probabilidades P0 e P1 na expressão do preço de uma call europeia.
     A f.c. é dada por exp{Cj(k, tau)v_bar + Dj(k, tau)v + ikx}.
     Recebe como parâmetros:
     k -> Variável de integração de Fourier
     S0 -> Preço inicial do ativo
-    K -> Preço de exercício     v0 -> Variância inicial 
+    K -> Preço de exercício
+    v0 -> Variância inicial 
     r -> Taxa de juros livre de risco
     tau -> Maturidade
     kappa -> Taxa de reversão à média
@@ -52,7 +53,7 @@ def heston_char(k: float, S0: float, K: float, v0: float, r: float, tau: float, 
     return expo
 
 
-def heston_integ(k: float, S0: float, K: float, v0: float, r: float, tau: float, kappa: float, v_bar: float, gamma: float, rho: float, j: int):
+def heston_integ(k: float, S0: float, K: float, r: float, tau: float, v0: float, kappa: float, v_bar: float, gamma: float, rho: float, j: int):
     '''
     Calcula o integrando necessário para obtermos os valores de P0 e P1.
     Recebe como argumento os mesmo parâmetros de heston_char().
@@ -61,12 +62,12 @@ def heston_integ(k: float, S0: float, K: float, v0: float, r: float, tau: float,
     '''
     # Obtendo o integrando
     i = 1j
-    expo = heston_char(k, S0, K, v0, r, tau, kappa, v_bar, gamma, rho, j)
+    expo = heston_char(k, S0, K, r, tau, v0, kappa, v_bar, gamma, rho, j)
 
     return (expo/(i*k)).real
 
 
-def heston_prob(S0: float, K: float, v0: float, r: float, tau: float, kappa: float, v_bar: float, gamma: float, rho: float, j: int):
+def heston_prob(S0: float, K: float, r: float, tau: float, v0: float, kappa: float, v_bar: float, gamma: float, rho: float, j: int):
     '''
     Calcula as probabilidades P0 e P1 para preço da call no modelo de Heston. Utiliza a função heston_char() para calcular a função
     característica, heston_integ() para fornecer um integrando e utiliza o método da quadratura adaptativa para calcular a integral da parte real.
@@ -85,7 +86,7 @@ def heston_prob(S0: float, K: float, v0: float, r: float, tau: float, kappa: flo
     '''
     # Realizando a integração numérica
     integral, _ = quad(heston_integ, 0, np.inf, args=(
-        S0, K, v0, r, tau, kappa, v_bar, gamma, rho, j))
+        S0, K, r, tau, v0, kappa, v_bar, gamma, rho, j), limit=500, epsabs=1e-10, epsrel=1e-10)
 
     # Obtendo a probabilidade
     prob = 0.5 + (1/np.pi)*integral
@@ -93,7 +94,7 @@ def heston_prob(S0: float, K: float, v0: float, r: float, tau: float, kappa: flo
     return prob
 
 
-def heston_call_price(S0: float, K: float, v0: float, r: float, tau: float, kappa: float, v_bar: float, gamma: float, rho: float):
+def heston_call_price(S0: float, K: float, r: float, tau: float, v0: float, kappa: float, v_bar: float, gamma: float, rho: float):
     '''
     Calcula o preço de uma call europeia no modelo de Heston a partir da expressão C(K) = S*P1 - Ke^{-rtau}P0.
     Chama as funções heston_char() e heston_prob() para calcular os valores necessários.
@@ -103,8 +104,8 @@ def heston_call_price(S0: float, K: float, v0: float, r: float, tau: float, kapp
     '''
 
     # Calculando as probabilidades
-    P0 = heston_prob(S0, K, v0, r, tau, kappa, v_bar, gamma, rho, j=0)
-    P1 = heston_prob(S0, K, v0, r, tau, kappa, v_bar, gamma, rho, j=1)
+    P0 = heston_prob(S0, K, r, tau, v0, kappa, v_bar, gamma, rho, j=0)
+    P1 = heston_prob(S0, K, r, tau, v0, kappa, v_bar, gamma, rho, j=1)
 
     # Fórmula do preço
     C = S0*P1 - K*np.exp(-r * tau)*P0
@@ -128,5 +129,5 @@ if __name__ == "__main__":
     gamma = 0.6
     rho = -0.7
 
-    resultado = heston_call_price(S0, K, v0, r, tau, kappa, v_bar, gamma, rho)
+    resultado = heston_call_price(S0, K, r, tau, v0, kappa, v_bar, gamma, rho)
     print(resultado)
